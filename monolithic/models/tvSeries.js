@@ -1,7 +1,7 @@
 const { getDatabase } = require('../config/mongodb')
 const { ObjectId } = require('mongodb')
 
-class movieModel {
+class TvSeriesModel {
   static find() {
     return getDatabase().collection("tvSeries").find().toArray();
   }
@@ -27,3 +27,5 @@ class movieModel {
       .deleteOne({ _id: ObjectId(id) });
   }
 }
+
+module.exports = TvSeriesModel
