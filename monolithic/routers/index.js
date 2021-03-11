@@ -2,7 +2,7 @@ const router = require('express').Router()
 const MovieController = require('../controllers/movieControllers.js')
 const TVSeriesController = require('../controllers/tvSeriesControllers.js')
 
-router.get('/', () => {
+router.get('/', (req, res) => {
   res.send('Welcome back jefri, server is online')
 })
 
