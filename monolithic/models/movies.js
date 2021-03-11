@@ -28,4 +28,4 @@ class MovieModel {
   }
 }
 
-module.exports = MoviesModel
+module.exports = MovieModel
