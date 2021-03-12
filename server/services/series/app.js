@@ -18,7 +18,7 @@ connect().then(async (db) => {
 
   database = db
 
-  app.listem(PORT, () => {
+  app.listen(PORT, () => {
     console.log('listening on port ' + PORT)
   })
 })
