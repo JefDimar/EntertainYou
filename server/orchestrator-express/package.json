@@ -1,5 +1,5 @@
 {
-  "name": "movies",
+  "name": "orchestrator-express",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,11 +8,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "ioredis": "^4.23.0",
-    "mongodb": "^3.6.4"
-  }
+  "license": "ISC"
 }
