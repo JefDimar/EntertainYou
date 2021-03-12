@@ -3,7 +3,7 @@ const Movie = require('../models')
 class Controller {
   static async findAll(req, res, next) {
     try {
-      const movies = await Movie.find().limit(20)
+      const movies = await Movie.find()
       res.status(200).json(movies)
     } catch ({ message }) {
       res.status(500).json({ message })

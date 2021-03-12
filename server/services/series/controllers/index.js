@@ -3,7 +3,7 @@ const Series = require('../models')
 class Controller {
   static async findAll(req, res, next) {
     try {
-      const series = await Series.find().limit(20)
+      const series = await Series.find()
       res.status(200).json(series)
     } catch ({ message }) {
       res.status(500).json(message)
