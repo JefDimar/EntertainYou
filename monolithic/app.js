@@ -3,7 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 3000
 const cors = require('cors');
 const { connect } = require('./config/mongodb');
-const router = require('./routers')
+const router = require('./routers/index')
 
 let database = null
 
