@@ -1,4 +1,7 @@
 const router = require('express').Router()
+const Controller = require('../controllers')
+const MovieController = require('../controllers/movieController')
+const SeriesController = require('../controllers/seriesController')
 
 router.get('/entertainme', Controller.findAll)
 
