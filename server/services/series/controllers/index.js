@@ -20,7 +20,7 @@ class Controller {
         tags: req.body.tags
       }
       const series = await Series.create(input)
-      res.status(200).json('Series created successfully')
+      res.status(200).json(series)
     } catch ({ message }) {
       res.status(500).json(message)
     }
@@ -47,7 +47,7 @@ class Controller {
         tags: req.body.tags
       }
       const series = await Series.update(id, input)
-      res.status(200).json('Series updated successfully')
+      res.status(200).json(series)
     } catch ({ message }) {
       res.status(500).json(message)
     }
@@ -57,7 +57,7 @@ class Controller {
     try {
       const id = req.params.id
       const series = await Series.delete(id)
-      res.status(200).json('Series deleted successfully')
+      res.status(200).json(series)
     } catch ({message}) {
       res.status(500).json(message)
     }

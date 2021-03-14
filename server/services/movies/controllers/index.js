@@ -21,7 +21,7 @@ class Controller {
       }
 
       const movies = await Movie.create(input)
-      res.status(201).json('Movies added successfully')
+      res.status(201).json(movies)
     } catch ({ message }) {
       res.status(500).json(message)
     }
@@ -48,7 +48,7 @@ class Controller {
         tags: req.body.tags
       }
       const movies = await Movie.update(id, input)
-      res.status(200).json('Movies updated successfully')
+      res.status(200).json(movies)
     } catch ({ message }) {
       res.status(500).json(message)
     }
@@ -59,7 +59,7 @@ class Controller {
       const id = req.params.id
 
       const movies = await Movie.delete(id)
-      res.status(200).json('Movies deleted successfully')
+      res.status(200).json(movies)
     } catch ({ message }) {
       res.status(500).json(message)
     }
