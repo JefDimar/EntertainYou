@@ -1,60 +1,7 @@
 const { gql, ApolloServer } = require('apollo-server')
-const axios = require('axios')
-const Redis = require('ioredis')
-const redis = new Redis({ connectTimeout: 60000 })
+const EntertainmeSchema = require('./schema/entertainme')
 
-const typeDefs = gql`
-  type movie {
-    id: ID,
-    title: String,
-    overview: String,
-    poster_path: String,
-    popularity: Float
-  }
-  type serie {
-    id: ID,
-    title: String,
-    overview: String,
-    poster_path: String,
-    popularity: Float
-  }
-  type response {
-    movies: [movie],
-    series: [serie]
-  }
-  type Query {
-    response: response
-  }
-`
-const resolvers = {
-  Query: {
-    async response() {
-      try {
-        const data = await redis.get('movies/series:data')
-
-        if (data) {
-          const output = JSON.parse(data)
-          return output
-        } else {
-          const [movies, series] = await Promise.all([
-            axios.get('http://localhost:4001/movies'),
-            axios.get('http://localhost:4002/series')
-          ])
-          const output = {
-            movies: movies.data,
-            series: series.data
-          }
-          redis.set('movies/series:data', JSON.stringify(output))
-          return output
-        }
-      } catch ({ message }) {
-        return message
-      }
-    }
-  }
-}
-
-const server = new ApolloServer({ typeDefs, resolvers })
+const server = new ApolloServer({ typeDefs: EntertainmeSchema.typeDefs, resolvers: EntertainmeSchema.resolvers })
 
 server.listen().then(({ url }) => {
   console.log('Apollo Server listening on ' + url)
