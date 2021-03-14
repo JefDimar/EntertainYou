@@ -10,14 +10,16 @@ module.exports = {
     title: String,
     overview: String,
     poster_path: String,
-    popularity: Float
+    popularity: Float,
+    tags: [String]
   }
   type serie {
     id: ID,
     title: String,
     overview: String,
     poster_path: String,
-    popularity: Float
+    popularity: Float,
+    tags: [String]
   }
   type response {
     movies: [movie],
@@ -38,6 +40,7 @@ module.exports = {
             const output = JSON.parse(data)
             return output
           } else {
+            await redis.del('movies/series:data')
             const [movies, series] = await Promise.all([
               axios.get('http://localhost:4001/movies'),
               axios.get('http://localhost:4002/series')
@@ -46,7 +49,7 @@ module.exports = {
               movies: movies.data,
               series: series.data
             }
-            redis.set('movies/series:data', JSON.stringify(output))
+            await redis.set('movies/series:data', JSON.stringify(output))
             return output
           }
         } catch ({ message }) {
