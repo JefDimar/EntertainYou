@@ -34,8 +34,8 @@ module.exports = {
     Query: {
       async response() {
         try {
+          await redis.del('movies/series:data')
           const data = await redis.get('movies/series:data')
-
           if (data) {
             const output = JSON.parse(data)
             return output
