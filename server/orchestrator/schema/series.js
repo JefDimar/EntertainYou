@@ -5,33 +5,35 @@ const redis = new Redis({ connectTimeout: 60000 })
 
 module.exports = {
   typeDefs: gql`
-  type serie {
-    id: ID,
+  input SerieInput{
     title: String,
     overview: String,
     poster_path: String,
     popularity: Float,
     tags: [String]
   }
-  input {
-    title: String,
-    overview: String,
-    poster_path: String,
-    popularity: Float,
-    tags: [String]
+  extend type Query {
+    findSerie(id: ID): serie
   }
-  type Query {
-    findById({id: id}): serie
-  }
-  type Mutation {
-    createSerie(input): serie,
-    updateSerie(input, {id:id}): serie,
-    deleteSerie({id: id}): String
+  extend type Mutation {
+    createSerie(input: SerieInput): serie,
+    updateSerie(input: SerieInput, id:ID): serie,
+    deleteSerie(id: ID): String
   }
   `,
   resolvers: {
-    Query: {},
-    Mutations: {
+    Query: {
+      async findSerie(parent, args, context, info) {
+        try {
+          const { data } = await axios.get(`http://localhost:4002/series/${args.id}`)
+
+          return data.ops[0]
+        } catch ({ message }) {
+          return message
+        }
+      },
+    },
+    Mutation: {
       async createSerie(parent, args, context, info) {
         try {
           await redis.del('movies/series:data')
@@ -42,21 +44,11 @@ module.exports = {
           return message
         }
       },
-      async findById(parent, args, context, info) {
-        try {
-          await redis.del('movies/series:data')
-          const { data } = await axios.get(`http://localhost:4002/series/${args.id}`)
-
-          return data
-        } catch ({ message }) {
-          return message
-        }
-      },
       async updateSerie(parent, args, context, info) {
         try {
           await redis.del('movies/series:data')
 
-          const { data } = await axios.put(`http://localhost:4002/series/${id}`, args.input)
+          const { data } = await axios.put(`http://localhost:4002/series/${args.id}`, args.input)
 
           return data
         } catch ({ message }) {
@@ -67,10 +59,10 @@ module.exports = {
         try {
           await redis.del('movies/series:data')
 
-          const { data } = await axios.delete(`http://localhost:4001/series/${id}`)
+          const { data } = await axios.delete(`http://localhost:4001/series/${args.id}`)
           const output = 'Series deleted successfully'
           return output
-        } catch ({message}) {
+        } catch ({ message }) {
           return message
         }
       }

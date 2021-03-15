@@ -5,49 +5,41 @@ const redis = new Redis({ connectTimeout: 60000 })
 
 module.exports = {
   typeDefs: gql`
-  type movie {
-    id: ID,
+  input MovieInput {
     title: String,
     overview: String,
     poster_path: String,
     popularity: Float,
     tags: [String]
   }
-  input {
-    title: String,
-    overview: String,
-    poster_path: String,
-    popularity: Float,
-    tags: [String]
-  }
-  type Query {
-    findById({id: id}): movie
+  extend type Query {
+    findMovie(id: ID): movie
   }
   type Mutation {
-    createMovie(input): movie,
-    updateMovie(input, {id:id}): movie,
-    deleteMovie({id: id}): String
+    createMovie(input: MovieInput): movie
+    updateMovie(input: MovieInput, id: ID): movie
+    deleteMovie(id: ID): String
   }
   `,
   resolvers: {
-    Query: {},
-    Mutations: {
+    Query: {
+      async findMovie(parent, args, context, info) {
+        try {
+          const { data } = await axios.get(`http://localhost:4001/movies/${args.id}`)
+
+          return data.ops[0]
+        } catch ({ message }) {
+          return message
+        }
+      },
+    },
+    Mutation: {
       async createMovie(parent, args, context, info) {
         try {
           await redis.del('movies/series:data')
           const { data } = await axios.post('http://localhost:4001/movies', args.input)
 
-          return data
-        } catch ({ message }) {
-          return message
-        }
-      },
-      async findById(parent, args, context, info) {
-        try {
-          await redis.del('movies/series:data')
-          const { data } = await axios.get(`http://localhost:4001/movies/${args.id}`)
-
-          return data
+          return data.ops[0]
         } catch ({ message }) {
           return message
         }
@@ -56,9 +48,9 @@ module.exports = {
         try {
           await redis.del('movies/series:data')
 
-          const { data } = await axios.put(`http://localhost:4001/movies/${id}`, args.input)
+          const { data } = await axios.put(`http://localhost:4001/movies/${args.id}`, args.input)
 
-          return data
+          return data.ops[0]
         } catch ({ message }) {
           return message
         }
@@ -67,7 +59,7 @@ module.exports = {
         try {
           await redis.del('movies/series:data')
 
-          const { data } = await axios.delete(`http://localhost:4001/movies/${id}`)
+          const { data } = await axios.delete(`http://localhost:4001/movies/${args.id}`)
           const output = 'Movies deleted successfully'
           return output
         } catch ({message}) {

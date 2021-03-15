@@ -6,7 +6,7 @@ const redis = new Redis({ connectTimeout: 60000 })
 module.exports = {
   typeDefs: gql`
   type movie {
-    id: ID,
+    _id: ID,
     title: String,
     overview: String,
     poster_path: String,
@@ -14,7 +14,7 @@ module.exports = {
     tags: [String]
   }
   type serie {
-    id: ID,
+    _id: ID,
     title: String,
     overview: String,
     poster_path: String,
@@ -40,7 +40,6 @@ module.exports = {
             const output = JSON.parse(data)
             return output
           } else {
-            await redis.del('movies/series:data')
             const [movies, series] = await Promise.all([
               axios.get('http://localhost:4001/movies'),
               axios.get('http://localhost:4002/series')
