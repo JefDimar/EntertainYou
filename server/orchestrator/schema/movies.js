@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server')
+const { gql, ApolloError } = require('apollo-server')
 const axios = require('axios')
 const Redis = require('ioredis')
 const redis = new Redis({ connectTimeout: 60000 })
@@ -29,7 +29,7 @@ module.exports = {
 
           return data.ops[0]
         } catch ({ message }) {
-          return message
+          return new ApolloError(message)
         }
       },
     },
@@ -41,7 +41,7 @@ module.exports = {
 
           return data.ops[0]
         } catch ({ message }) {
-          return message
+          return new ApolloError(message)
         }
       },
       async updateMovie(parent, args, context, info) {
@@ -52,7 +52,7 @@ module.exports = {
 
           return data.ops[0]
         } catch ({ message }) {
-          return message
+          return new ApolloError(message)
         }
       },
       async deleteMovie(parent, args, context, info) {
@@ -63,7 +63,7 @@ module.exports = {
           const output = 'Movies deleted successfully'
           return output
         } catch ({message}) {
-          return message
+          return new ApolloError(message)
         }
       }
     }

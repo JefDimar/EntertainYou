@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server')
+const { gql, ApolloError } = require('apollo-server')
 const axios = require('axios')
 const Redis = require('ioredis')
 const redis = new Redis({ connectTimeout: 60000 })
@@ -52,7 +52,7 @@ module.exports = {
             return output
           }
         } catch ({ message }) {
-          return message
+          return new ApolloError(message)
         }
       }
     }

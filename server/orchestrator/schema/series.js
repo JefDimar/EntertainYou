@@ -29,7 +29,7 @@ module.exports = {
 
           return data.ops[0]
         } catch ({ message }) {
-          return message
+          return new ApolloError(message)
         }
       },
     },
@@ -41,7 +41,7 @@ module.exports = {
 
           return data
         } catch ({ message }) {
-          return message
+          return new ApolloError(message)
         }
       },
       async updateSerie(parent, args, context, info) {
@@ -52,7 +52,7 @@ module.exports = {
 
           return data
         } catch ({ message }) {
-          return message
+          return new ApolloError(message)
         }
       },
       async deleteSerie(parent, args, context, info) {
@@ -63,7 +63,7 @@ module.exports = {
           const output = 'Series deleted successfully'
           return output
         } catch ({ message }) {
-          return message
+          return new ApolloError(message)
         }
       }
     }
