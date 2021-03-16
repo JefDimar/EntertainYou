@@ -33,8 +33,8 @@ export default function HomePage() {
     <>
       <Container>
         <Card.Group itemsPerRow={4}>
-          {data.response.movies.map((movies) => {
-            return <CardItem movies={movies} key={movies.id} />;
+          {data.response.movies.map((data) => {
+            return <CardItem data={data} key={data._id} />;
           })}
         </Card.Group>
       </Container>
