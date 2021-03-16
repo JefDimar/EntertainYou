@@ -1,7 +1,16 @@
 import React from "react";
-import { Card, Icon, Image } from "semantic-ui-react";
+import { Button, Card, Icon, Image } from "semantic-ui-react";
+// import { useMutation, gql } from "@apollo/client";
+
+// const DELETE_MOVIES = gql`
+//   mutation deleteMovie {
+//     deleteMovie(id)
+//   }
+// `;
 
 export default function CardItem(props) {
+  // const [deleteItem, { data }] = useMutation(DELETE_MOVIES);
+
   return (
     <>
       <Card color="blue">
@@ -14,12 +23,27 @@ export default function CardItem(props) {
             <span>{props.movies.popularity}</span>
           </Card.Meta>
           <Card.Description>{props.movies.overview}</Card.Description>
-          <Card.Content extra>
-            <a>
-              <Icon name="star" />
-              {props.movies.tags.join(' | ')}
-            </a>
-          </Card.Content>
+        </Card.Content>
+        <Card.Content extra>
+          <p>
+            <Icon name="star" />
+            {props.movies.tags.join(" | ")}
+          </p>
+          <Button.Group floated="left">
+            <Button color="yellow" icon>
+              <Icon name="pencil" />
+            </Button>
+            <Button
+              color="red"
+              icon
+              // onClick={deleteItem({ id: props.movies.id })}
+            >
+              <Icon name="trash" />
+            </Button>
+            <Button color="pink" icon>
+              <Icon name="like" />
+            </Button>
+          </Button.Group>
         </Card.Content>
       </Card>
     </>
