@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card, Icon, Image } from "semantic-ui-react";
-import { favoritesVar } from "../graphql/vars"
+import { favoritesVar } from "../graphql/vars";
 // import { useMutation, gql } from "@apollo/client";
 
 // const DELETE_MOVIES = gql`
@@ -12,7 +12,7 @@ import { favoritesVar } from "../graphql/vars"
 export default function CardItem(props) {
   // const [deleteItem, { data }] = useMutation(DELETE_MOVIES);
   function handleFavorite() {
-    const existingFavorites = favoritesVar()
+    const existingFavorites = favoritesVar();
 
     const newData = {
       _id: props.movies._id,
@@ -21,9 +21,9 @@ export default function CardItem(props) {
       popularity: props.movies.popularity,
       tags: props.movies.tags,
       poster_path: props.movies.poster_path,
-    }
+    };
 
-    favoritesVar([newData, ...existingFavorites])
+    favoritesVar([newData, ...existingFavorites]);
   }
 
   return (
@@ -34,16 +34,16 @@ export default function CardItem(props) {
         />
         <Card.Content>
           <Card.Header>{props.data.title}</Card.Header>
-          <Card.Meta>
+          {/* <Card.Meta>
             <span>{props.data.popularity}</span>
           </Card.Meta>
-          <Card.Description>{props.data.overview}</Card.Description>
+          <Card.Description>{props.data.overview}</Card.Description> */}
         </Card.Content>
         <Card.Content extra>
-          <p>
+          {/* <p>
             <Icon name="star" />
             {props.data.tags.join(" | ")}
-          </p>
+          </p> */}
           <Button.Group floated="left">
             <Button color="yellow" icon>
               <Icon name="pencil" />

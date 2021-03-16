@@ -47,7 +47,6 @@ function App() {
     <div className="App">
       <Navigation />
       <Container>
-        <h1>Testing semantic ui on new porto</h1>
         <Switch>
           <Route exact path="/">
             <HomePage />

@@ -1,7 +1,7 @@
 import React from "react";
 import { useReactiveVar } from "@apollo/client";
 import { favoritesVar } from "../graphql/vars";
-import { Card, Container } from "semantic-ui-react";
+import { Card, Container, Header } from "semantic-ui-react";
 import CardItem from "../components/CardItem"
 
 export default function FavoritePage() {
@@ -10,8 +10,8 @@ export default function FavoritePage() {
   console.log(favorites);
   return (
     <div>
-      <p>Ini Favorite page</p>
       <Container>
+        <Header size="huge" dividing>Favorites</Header>
         <Card.Group itemsPerRow={4}>
           {
             favorites.map(data => {
