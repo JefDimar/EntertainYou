@@ -16,7 +16,7 @@ class Controller {
         title: req.body.title,
         overview: req.body.overview,
         poster_path: req.body.poster_path,
-        popular: parseFloat(req.body.popular),
+        popularity: req.body.popularity,
         tags: req.body.tags
       }
       const series = await Series.create(input)
@@ -43,7 +43,7 @@ class Controller {
         title: req.body.title,
         overview: req.body.overview,
         poster_path: req.body.poster_path,
-        popular: parseFloat(req.body.popular),
+        popularity: req.body.popularity,
         tags: req.body.tags
       }
       const series = await Series.update(id, input)

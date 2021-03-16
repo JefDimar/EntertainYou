@@ -37,6 +37,7 @@ module.exports = {
       async createMovie(parent, args, context, info) {
         try {
           await redis.del('movies/series:data')
+          console.log(args.input);
           const { data } = await axios.post('http://localhost:4001/movies', args.input)
 
           return data.ops[0]
