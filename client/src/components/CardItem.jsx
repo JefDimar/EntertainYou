@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Button, Card, Icon, Image, Popup } from "semantic-ui-react";
 import { favoritesVar } from "../graphql/vars";
 // import { useMutation, gql } from "@apollo/client";
@@ -12,6 +12,7 @@ import { favoritesVar } from "../graphql/vars";
 
 export default function CardItem(props) {
   // const [deleteItem, { data }] = useMutation(DELETE_MOVIES);
+  const location = useLocation();
   function handleFavorite() {
     const existingFavorites = favoritesVar();
 
@@ -38,38 +39,42 @@ export default function CardItem(props) {
         <Card.Content>
           <Card.Header>{props.data.title}</Card.Header>
         </Card.Content>
-        <Card.Content extra>
-          <Button.Group floated="left">
-            <Popup
-              content="Edit"
-              trigger={
-                <Button color="yellow" icon>
-                  <Icon name="pencil" />
-                </Button>
-              }
-            />
-            <Popup
-              content="Delete"
-              trigger={
-                <Button
-                  color="red"
-                  icon
-                  // onClick={deleteItem({ id: props.data.id })}
-                >
-                  <Icon name="trash" />
-                </Button>
-              }
-            />
-            <Popup
-              content="Add to Favorite"
-              trigger={
-                <Button color="pink" icon onClick={handleFavorite}>
-                  <Icon name="like" />
-                </Button>
-              }
-            />
-          </Button.Group>
-        </Card.Content>
+        {location.pathname === "/favorite" ? (
+          ""
+        ) : (
+          <Card.Content extra>
+            <Button.Group floated="left">
+              <Popup
+                content="Edit"
+                trigger={
+                  <Button color="yellow" icon>
+                    <Icon name="pencil" />
+                  </Button>
+                }
+              />
+              <Popup
+                content="Delete"
+                trigger={
+                  <Button
+                    color="red"
+                    icon
+                    // onClick={deleteItem({ id: props.data.id })}
+                  >
+                    <Icon name="trash" />
+                  </Button>
+                }
+              />
+              <Popup
+                content="Add to Favorite"
+                trigger={
+                  <Button color="pink" icon onClick={handleFavorite}>
+                    <Icon name="like" />
+                  </Button>
+                }
+              />
+            </Button.Group>
+          </Card.Content>
+        )}
       </Card>
     </>
   );
