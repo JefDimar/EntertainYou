@@ -55,7 +55,7 @@ export const DELETE_MOVIES = gql`
   }
 `;
 
-export const GET_DETAIL = gql`
+export const GET_DETAIL_MOVIE = gql`
   query movieDetail($id: ID) {
     findMovie(id: $id) {
       _id
