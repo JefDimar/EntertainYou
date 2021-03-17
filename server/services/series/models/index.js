@@ -11,7 +11,7 @@ class Series {
   }
 
   static findPK(id) {
-    return getDatabase().collection("tvSeries").find({ _id: ObjectId(id) })
+    return getDatabase().collection("tvSeries").findOne({ _id: ObjectId(id) })
   }
 
   static update(id, series) {
