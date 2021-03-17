@@ -7,7 +7,6 @@ import CardItem from "../components/CardItem"
 export default function FavoritePage() {
   const favorites = useReactiveVar(favoritesVar);
 
-  console.log(favorites);
   return (
     <div>
       <Container>

@@ -9,62 +9,16 @@ import {
   Modal,
   Form,
 } from "semantic-ui-react";
-import { useQuery, gql, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import CardItem from "../components/CardItem";
+import { GET_DATA_MOVIESSERIES, CREATE_MOVIES, CREATE_SERIES } from "../graphql/index"
 
-const GET_DATA_MOVIESSERIES = gql`
-  query entertainme {
-    response {
-      movies {
-        _id
-        title
-        overview
-        popularity
-        poster_path
-        tags
-      }
-      series {
-        _id
-        title
-        overview
-        popularity
-        poster_path
-        tags
-      }
-    }
-  }
-`;
-
-const CREATE_MOVIES = gql`
-  mutation createMovie($input: MovieInput) {
-    createMovie(input: $input) {
-      _id
-      title
-      overview
-      poster_path
-      popularity
-      tags
-    }
-  }
-`;
-
-const CREATE_SERIES = gql`
-  mutation createSeries($input: SerieInput) {
-    createSerie(input: $input) {
-      _id
-      title
-      overview
-      poster_path
-      popularity
-      tags
-    }
-  }
-`;
 export default function HomePage() {
   const { loading, error, data } = useQuery(GET_DATA_MOVIESSERIES);
   const [open, setOpen] = useState(false);
-
+  // eslint-disable-next-line
   const [createMovie, { data: newMovie }] = useMutation(CREATE_MOVIES);
+  // eslint-disable-next-line
   const [createSerie, { data: newSerie }] = useMutation(CREATE_SERIES);
 
   const [newData, setNewData] = useState({
