@@ -11,7 +11,7 @@ class Movie {
   }
 
   static findPK(id) {
-    return getDatabase().collection("movies").find({ _id: ObjectId(id) })
+    return getDatabase().collection("movies").findOne({ _id: ObjectId(id) })
   }
 
   static update(id, movie) {

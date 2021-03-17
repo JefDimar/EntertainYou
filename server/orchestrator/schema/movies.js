@@ -27,7 +27,7 @@ module.exports = {
         try {
           const { data } = await axios.get(`http://localhost:4001/movies/${args.id}`)
 
-          return data.ops[0]
+          return data
         } catch ({ message }) {
           return new ApolloError(message)
         }
