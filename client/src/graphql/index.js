@@ -67,3 +67,24 @@ export const GET_DETAIL_MOVIE = gql`
     }
   }
 `;
+
+export const GET_DETAIL = gql`
+  query getDetail($id: ID) {
+  findMovie(id: $id) {
+    _id
+    title
+    overview
+    poster_path
+    popularity
+    tags
+  }
+  findSerie(id: $id) {
+    _id
+    title
+    overview
+    poster_path
+    popularity
+    tags
+  }
+}
+`;
