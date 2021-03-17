@@ -8,7 +8,7 @@ import {
   Header,
   Segment,
   Grid,
-  Divider,
+  Rating,
 } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { GET_DETAIL } from "../graphql/index";
@@ -38,13 +38,25 @@ export default function DetailPage() {
               />
             </Grid.Column>
             <Grid.Column>
-              <Card>
+              <Card fluid>
                 <Card.Content>
-                  <Card.Header>{data.findMovie.title}</Card.Header>
+                  <Card.Header as="h1">Synopsis</Card.Header>
+                  <Card.Description as="h3">
+                    {data.findMovie.overview}
+                  </Card.Description>
                 </Card.Content>
-                <Card.Description>{data.findMovie.overview}</Card.Description>
-                <Card.Description>{data.findMovie.popularity}</Card.Description>
-                <Card.Description>{data.findMovie.tags}</Card.Description>
+                <Card.Content>
+                  <Card.Header as="h1">Popularity</Card.Header>
+                  <Rating
+                    icon="start"
+                    rating={data.findMovie.popularity}
+                    maxRating={10}
+                  />
+                </Card.Content>
+                <Card.Content>
+                  <Card.Header as="h1">Tags</Card.Header>
+                  <Card.Description>{data.findMovie.tags}</Card.Description>
+                </Card.Content>
               </Card>
             </Grid.Column>
           </Grid.Row>

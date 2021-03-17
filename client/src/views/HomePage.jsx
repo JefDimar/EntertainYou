@@ -37,7 +37,6 @@ export default function HomePage() {
     }
   }
   function addMovie(e) {
-    // console.log(newData)
     createMovie({
       variables: { input: newData },
       refetchQuery: [{ query: GET_DATA_MOVIESSERIES }],
@@ -59,7 +58,6 @@ export default function HomePage() {
   } else if (error) {
     return <div>{error.message}</div>;
   }
-  // console.log(newData)
   return (
     <>
       <Container>
