@@ -2,21 +2,16 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Button, Card, Icon, Image, Popup } from "semantic-ui-react";
 import { favoritesVar } from "../graphql/vars";
-import Swal from 'sweetalert2'
-// import { useMutation, gql } from "@apollo/client";
-
-// const DELETE_MOVIES = gql`
-//   mutation deleteMovie {
-//     deleteMovie(id)
-//   }
-// `;
+import Swal from "sweetalert2";
+import { useMutation } from "@apollo/client";
+import { GET_DATA_MOVIESSERIES, DELETE_MOVIES } from "../graphql/index"
 
 export default function CardItem(props) {
-  // const [deleteItem, { data }] = useMutation(DELETE_MOVIES);
+  // eslint-disable-next-line
+  const [deleteItem, { data }] = useMutation(DELETE_MOVIES);
   const location = useLocation();
 
   function handleFavorite() {
-    
     const existingFavorites = favoritesVar();
 
     const newData = {
@@ -31,13 +26,31 @@ export default function CardItem(props) {
     favoritesVar([newData, ...existingFavorites]);
 
     Swal.fire({
-      position: 'top-end',
-      title: 'Success Add to Favorite',
+      position: "top-end",
+      title: "Success Add to Favorite",
       showConfirmButton: false,
-      timer: 2000
+      timer: 2000,
+    });
+  }
+  function handleDelete() {
+    Swal.fire({
+      title: 'Do you want to delet movies',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: `Save`,
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Saved!', '', 'success')
+        deleteItem({
+          variables: { id: props.data._id},
+          refetchQueries: [{ query: GET_DATA_MOVIESSERIES }]
+        })
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info')
+      }
     })
   }
-
   return (
     <>
       <Card color="blue">
@@ -65,11 +78,7 @@ export default function CardItem(props) {
               <Popup
                 content="Delete"
                 trigger={
-                  <Button
-                    color="red"
-                    icon
-                    // onClick={deleteItem({ id: props.data.id })}
-                  >
+                  <Button color="red" icon onClick={handleDelete}>
                     <Icon name="trash" />
                   </Button>
                 }

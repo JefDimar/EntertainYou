@@ -48,3 +48,9 @@ export const CREATE_SERIES = gql`
     }
   }
 `;
+
+export const DELETE_MOVIES = gql`
+  mutation deleteMovie($id: ID) {
+    deleteMovie(id: $id)
+  }
+`;
